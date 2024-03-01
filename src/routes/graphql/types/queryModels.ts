@@ -15,13 +15,13 @@ import { FastifyInstance } from 'fastify';
 export const MemberTypeId = new GraphQLEnumType({
   name: 'MemberTypeId',
   values: {
-    BASIC: { value: 'basic' },
-    BUSINESS: { value: 'business' },
+    basic: { value: 'basic' },
+    business: { value: 'business' },
   },
 });
 
 export const MemberType = new GraphQLObjectType({
-  name: 'memberTypes',
+  name: 'MemberType',
   fields: {
     id: { type: new GraphQLNonNull(MemberTypeId) },
     discount: { type: GraphQLFloat },
@@ -30,7 +30,7 @@ export const MemberType = new GraphQLObjectType({
 });
 
 export const Profiles = new GraphQLObjectType({
-  name: 'profiles',
+  name: 'Profile',
   fields: () => ({
     id: { type: new GraphQLNonNull(UUIDType) },
     isMale: { type: GraphQLBoolean },
@@ -66,14 +66,12 @@ export const Profiles = new GraphQLObjectType({
 });
 
 export const Posts = new GraphQLObjectType({
-  name: 'posts',
+  name: 'Post',
   fields: () => ({
     id: { type: new GraphQLNonNull(UUIDType) },
     title: { type: GraphQLString },
     content: { type: GraphQLString },
-
     authorId: { type: UUIDType },
-
     author: {
       type: Users,
       resolve: async (parent: Post, args, { prisma, httpErrors }: FastifyInstance) => {
@@ -89,7 +87,7 @@ export const Posts = new GraphQLObjectType({
 });
 
 export const Users: GraphQLObjectType = new GraphQLObjectType({
-  name: 'users',
+  name: 'User',
   fields: () => ({
     id: { type: new GraphQLNonNull(UUIDType) },
     name: { type: GraphQLString },
